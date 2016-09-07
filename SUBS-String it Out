@@ -1,0 +1,59 @@
+#include<bits/stdc++.h>
+#define ll      int
+using namespace std;
+
+ll sequence(string y,string x)
+{ ll n,o,p,cnt=0;
+
+  for(int i=0; i<y.size(); i++)
+  {
+            if(y[i]==x[cnt])
+                    {
+
+                              cnt++;}
+  }
+
+  if(cnt==x.size())
+          return 1;
+  else
+          return 0;
+}
+
+string match(string x,ll mid)
+{  string s="";
+          for(int i=0; i<x.size(); i++)
+                    for(int j=0; j<mid; j++)
+                    s+=x[i];
+          return s;
+}
+int main()
+{
+/*ifstream infile;
+     infile.open("A-large.in");
+     //freopen("output_file_name.out","w",stdout);
+      ofstream outfile;
+   outfile.open("output_file_name.out");*/
+
+   string x,y;
+   ll n,m,o,p;
+ cin>>n;
+
+   while(n--){  x=y="";
+
+                    cin>>x>>y;
+   o=y.length()/x.length();
+   ll l=0,h=o;
+   while(l<=h)
+   {      m=(l+h)/2;
+             if(sequence(y,match(x,m)))
+                   l=m+1;
+             else
+                    h=m-1;
+   }
+
+   cout<<h<<endl;}
+
+
+}
+
+
