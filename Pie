@@ -1,0 +1,58 @@
+#include<bits/stdc++.h>
+#define ll      int
+#define pi 3.14159265358979323846264338327950
+using namespace std;
+
+ll fun(double m, vector<double>r,int fr)
+{
+          if(m==0)
+                    return 0;
+          int k=0;
+          for(int i=0; i<r.size(); i++)
+                   k+=(int)(r[i]/m);
+                   if(k>=fr)
+                    return 1;
+                   else
+                    return 0;
+
+}
+
+int main()
+{
+/*ifstream infile;
+     infile.open("A-large.in");
+     //freopen("output_file_name.out","w",stdout);
+      ofstream outfile;
+   outfile.open("output_file_name.out");*/
+
+
+   ll n,o,p,f;
+   cin>>p;
+   while(p--)
+  {cin>>n>>f;
+   vector<double>r;
+  for(int i=0; i<n; i++)
+  {
+    cin>>o;
+    r.push_back(o*o*pi);
+  }
+  sort(r.begin(),r.end());
+
+ double l=0.0,h=r[n-1],m;
+
+  while(h-l>=.0000001)
+  {
+   
+
+          m=(l+h)/2;
+          if(fun(m,r,f+1))
+                    l=m;
+          else
+                    h=m;
+  }
+
+
+cout<<fixed<<setprecision(4)<<l<<endl;}
+}
+
+
