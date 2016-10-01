@@ -1,0 +1,100 @@
+#include<bits/stdc++.h>
+#define ll long long int
+# define l 1000000
+using namespace std;
+
+ll tree[4500000],lazy[4500000],m;
+ll t,n,c,p,q,v,f;
+
+void update(ll node, ll b, ll e, ll i,ll j,ll v)
+{   
+
+          if(lazy[node])
+          {
+                    tree[node]+=lazy[node];
+                   
+                    if(b!=e)
+                    {
+                     lazy[2*node]+=(lazy[node]/(e-b+1))*(((b+e)/2)-b+1);
+                      lazy[2*node+1]+=(lazy[node]/(e-b+1))*(e-((b+e)/2));
+                    }
+                    lazy[node]=0;
+
+          }
+         
+
+          if(b>e || b>j || e<i)
+                     
+                              return;
+                    
+          if(b>=i && e<=j)
+          {
+                    tree[node]+=(e-b+1)*v;
+                    if(b!=e)
+                    {
+                              lazy[2*node]+=v*(((b+e)/2)-b+1);
+                     lazy[2*node +1]+=v*(e-((b+e)/2));
+                    }
+            
+                    return;
+          }
+          update(2*node,b,((b+e)/2),i,j,v);
+          update(2*node + 1,((b+e)/2)+1,e,i,j,v);
+          tree[node]=tree[2*node ]+tree[2*node +1];
+         
+
+}
+
+ll query(ll node, ll b, ll e, ll i,ll j)
+{   m=(b+e)/2;
+if (b>e || b>j || e<i)
+        return 0;
+
+          if(lazy[node])
+          {
+                    tree[node]+=lazy[node];
+                    if(b!=e)
+                    {
+                     lazy[2*node]+=(lazy[node]/(e-b+1))*(((b+e)/2)-b+1);
+                      lazy[2*node+1]+=(lazy[node]/(e-b+1))*(e-((b+e)/2));
+                    }
+                    lazy[node]=0;
+
+          }
+ if (b>=i && e<=j)
+        return tree[node];
+
+
+
+          return query(node*2,b,((b+e)/2),i,j)+query(node*2 +1,((b+e)/2) + 1,e,i,j);
+
+}
+
+int main()
+{
+
+          cin>>t;
+          while(t--)
+          {
+                    cin>>n>>c;
+                   memset(tree,0,sizeof(tree));
+                   memset(lazy,0,sizeof(lazy));
+
+              while(c--)
+              {
+                        cin>>f;
+                        if(!f)
+                        {
+                                  cin>>p>>q>>v;
+                                  update(1,1,n,p,q,v);
+                        }
+                        else
+                        {
+                                  cin>>p>>q;
+                                  cout<<query(1,1,n,p,q)<<endl;
+                        }
+              }
+
+          }
+}
+
